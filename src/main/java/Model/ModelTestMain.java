@@ -1,5 +1,7 @@
 package Model;
 
+import Controller.ControllerClass;
+
 import java.util.ArrayList;
 
 public class ModelTestMain {
@@ -12,6 +14,9 @@ public class ModelTestMain {
 
         // test method for reading to test reading from the provided CSV files
         printTestReadingData(testInvoiceHeader);
+
+        ControllerClass c = new ControllerClass();
+        c.load();
     }
 
     private static void printTestReadingData(ArrayList<InvoiceHeader> testArray){
