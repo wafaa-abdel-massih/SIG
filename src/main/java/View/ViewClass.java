@@ -19,8 +19,8 @@ public class ViewClass extends JFrame{
     protected JButton createNewInvoice, deleteInvoice, createItem, deleteItem,
             okHeader, cancelHeader, okLine, cancelLine;
 
-    public JLabel invoiceNumLabel = new JLabel(""),
-            invoicesTotal = new JLabel("");
+    public JLabel invoiceNumLabel = new JLabel(" "),
+            invoicesTotal = new JLabel(" ");
     public JTextField invoiceDateDialog, customerNameDialog, itemName,
             itemPrice, itemCount, invoiceDateTF, customerNameTF;
     private final String[] item = {"No.","Item Name","Item Price","Count","Item Total"};
@@ -84,10 +84,10 @@ public class ViewClass extends JFrame{
                 row = control.headers.get(invoicesTable.getSelectedRow());
                 int selectedIndex = invoicesTable.getSelectedRow();
                 if (selectedIndex != -1) {
-                    invoiceNumLabel.setText("" + row.getInvoiceNum());
+                    invoiceNumLabel.setText(" " + row.getInvoiceNum());
                     invoiceDateTF.setText(row.getInvoiceDate());
                     customerNameTF.setText(row.getCustomerName());
-                    invoicesTotal.setText("" + row.getTotal());
+                    invoicesTotal.setText(" " + row.getTotal());
 
                     int s = row.getInvoiceLines().size();
                     lineData = new String[s][5];
@@ -226,9 +226,16 @@ public class ViewClass extends JFrame{
     public void deleteHeader() {
         int index = invoicesTable.getSelectedRow();
         if (index != -1) {
+            invoiceNumLabel.setText(" ");
+            invoiceDateTF.setText("");
+            customerNameTF.setText("");
+            invoicesTotal.setText(" ");
+
             invoiceModel.removeRow(index);
-            JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
+            lineModel.setRowCount(0);
             control.headers.remove(index);
+
+            JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
         }
     }
 
@@ -283,6 +290,7 @@ public class ViewClass extends JFrame{
         data[4] = String.valueOf(Double.parseDouble(data[2]) * Double.parseDouble(data[3]));
 
         row.setTotal(row.getTotal()+Double.parseDouble(data[4]));
+        invoicesTotal.setText("" + row.getTotal());
         invoicesTable.getModel().setValueAt(row.getTotal(),invoicesTable.getSelectedRow(),3);
 
         line = new InvoiceLine();
@@ -304,6 +312,10 @@ public class ViewClass extends JFrame{
     public void deleteLine(){
         int index = invoiceItemsTable.getSelectedRow();
         if (index != -1) {
+            row.setTotal(row.getTotal()-row.getInvoiceLines().get(index).getItemPrice());
+            invoicesTotal.setText("" + row.getTotal());
+            invoicesTable.getModel().setValueAt(row.getTotal(),invoicesTable.getSelectedRow(),3);
+
             lineModel.removeRow(index);
             JOptionPane.showMessageDialog(null, "Selected row deleted successfully");
             row.getInvoiceLines().remove(index);
