@@ -10,7 +10,8 @@ public class ModelTestMain {
 
         FileOperations testReadingObj = new FileOperations();
         ArrayList<InvoiceHeader> testInvoiceHeader;
-        testInvoiceHeader = testReadingObj.readFile();
+        testInvoiceHeader = testReadingObj.readFile("./src/main/resources/InvoiceHeader.csv",
+                "./src/main/resources/InvoiceLine.csv");
 
         // test method for reading to test reading from the provided CSV files
         printTestReadingData(testInvoiceHeader);

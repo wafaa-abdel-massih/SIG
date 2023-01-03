@@ -9,8 +9,10 @@ import java.util.ArrayList;
 public class ControllerClass implements ActionListener{
 
     public FileOperations initialLoad = new FileOperations();
-    public ArrayList<InvoiceHeader> headers = initialLoad.readFile();
-    public String[][] headerData = new String[headers.size()][4];
+    private String headerPath = "./src/main/resources/InvoiceHeader.csv";
+    private String linePath = "./src/main/resources/InvoiceLine.csv";
+    public ArrayList<InvoiceHeader> headers = initialLoad.readFile(headerPath, linePath);
+    public String[][] headerData;
     public ViewClass frame;
 
     public ControllerClass(){};
@@ -20,6 +22,7 @@ public class ControllerClass implements ActionListener{
 
     public String[][] loadHeader(){
 
+        headerData  = new String[headers.size()][4];
         for (int i=0; i<headers.size(); i++){
 
             headerData[i][0] = String.valueOf(headers.get(i).getInvoiceNum());

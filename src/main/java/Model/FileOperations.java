@@ -21,15 +21,16 @@ public class FileOperations {
 
     public int lineSize=0;
 
-    public ArrayList<InvoiceHeader> readFile(){
+    public ArrayList<InvoiceHeader> readFile(String headerPath, String linePath){
 
         invoiceHeader = new ArrayList<>();
         dataRow = new String[4];
 
         try {
-
-            invoiceHeaderData = new Scanner(new File("./src/main/resources/InvoiceHeader.csv"));
-            invoiceLineData = new Scanner(new File("./src/main/resources/InvoiceLine.csv"));
+            //"./src/main/resources/InvoiceHeader.csv"
+            //"./src/main/resources/InvoiceLine.csv"
+            invoiceHeaderData = new Scanner(new File(headerPath));
+            invoiceLineData = new Scanner(new File(linePath));
 
             while (invoiceHeaderData.hasNext())
             {

@@ -7,6 +7,7 @@ import Model.InvoiceLine;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -323,9 +324,31 @@ public class ViewClass extends JFrame{
     }
 
     public void loadFile(){
-        control.headers = file.readFile();
-        String[][] h = new String[control.headers.size()][4];
-        createLeftSidePanel(h);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("choose header file");
+        File selectedHeaderFile, selectedLineFile;
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedHeaderFile = fileChooser.getSelectedFile();
+
+            fileChooser.setDialogTitle("choose line file");
+            result = fileChooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedLineFile = fileChooser.getSelectedFile();
+
+                control.headers = file.readFile(selectedHeaderFile.getAbsolutePath(), selectedLineFile.getAbsolutePath());
+                String[][] s = control.loadHeader();
+                DefaultTableModel model = new DefaultTableModel(s, item);
+                invoicesTable.setModel(model);
+            }
+        }
+        invoiceNumLabel.setText(" ");
+        invoiceDateTF.setText("");
+        customerNameTF.setText("");
+        invoicesTotal.setText(" ");
+
+        lineModel.setRowCount(0);
+
         JOptionPane.showMessageDialog(null, "File Loaded successfully");
     }
 
