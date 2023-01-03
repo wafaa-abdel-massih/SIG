@@ -353,7 +353,21 @@ public class ViewClass extends JFrame{
     }
 
     public void saveFile(){
-        file.writeFile(control.headers);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("choose header file to save");
+        File selectedHeaderFile, selectedLineFile;
+        int result = fileChooser.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedHeaderFile = fileChooser.getSelectedFile();
+
+            fileChooser.setDialogTitle("choose line file to save");
+            result = fileChooser.showSaveDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                selectedLineFile = fileChooser.getSelectedFile();
+
+                file.writeFile(control.headers, selectedHeaderFile.getAbsolutePath(), selectedLineFile.getAbsolutePath());
+            }
+        }
         JOptionPane.showMessageDialog(null, "File Saved successfully");
     }
 

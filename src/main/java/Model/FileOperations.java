@@ -84,10 +84,10 @@ public class FileOperations {
         return invoiceHeader;
     }
 
-    public void writeFile(ArrayList<InvoiceHeader> invoiceHeader){
+    public void writeFile(ArrayList<InvoiceHeader> invoiceHeader, String headerPath, String linePath){
 
-        File invoiceHeaderFile = new File("InvoiceHeader.csv");
-        File invoiceLineFile = new File("InvoiceLine.csv");
+        File invoiceHeaderFile = new File(headerPath);
+        File invoiceLineFile = new File(linePath);
         FileWriter headerWriter, lineWriter;
 
         try {
